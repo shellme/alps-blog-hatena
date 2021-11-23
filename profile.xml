@@ -11,7 +11,7 @@
     <descriptor id="articleBody" def="https://schema.org/articleBody" title="article body"/>
     <descriptor id="dateCreated" def="https://schema.org/dateCreated" title="create date"/>
     <descriptor id="dateCreated">
-        <doc format="markdown">ISO8601フォーマットで記事の作成日付を表します</doc>
+        <doc format="markdown">ISO8601フォーマットで記事の作成日付を表します...</doc>
     </descriptor>
 
     <!-- Taxonomy -->
