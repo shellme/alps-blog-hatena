@@ -47,6 +47,7 @@
     <descriptor id="postDatePublished" def="https://schema.org/headline" title="記事のタイトル"/>
     <descriptor id="postDateCategory" def="https://schema.org/category" title="記事のカテゴリ"/>
         <doc format="markdown">記事に紐付けるカテゴリ。</doc>
+    </descriptor>
     </descriptor id="postHeadline" def="https://schema.org/headline" title="記事のタイトル">
         <doc format="markdown">記事のタイトル（ヘッドライン）</doc>
     </descriptor>
