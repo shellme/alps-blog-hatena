@@ -1,44 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<alps
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://alps-io.github.io/schemas/alps.xsd">
-    <title>ALPS Blog</title>
-    <doc>An ALPS profile example for ASD</doc>
-    <link href="https://github.com/koriym/app-state-diagram/issues" rel="issue"/>
+<alps xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://alps-io.github.io/schemas/alps.xsd">
+    <title>Blog Structure</title>
+    <doc>Blog Structure</doc>
+    <link href="https://github.com/koriym/app-state-diagram/issues" rel="issue" />
 
     <!-- Ontology -->
-    <descriptor id="id" def="https://schema.org/identifier" title="identifier"/>
-    <descriptor id="articleBody" def="https://schema.org/articleBody" title="article body"/>
-    <descriptor id="dateCreated" def="https://schema.org/dateCreated" title="create date"/>
+    <descriptor id="BlogDomain" title="ブログドメイン">
+        <doc format="markdown">
+            ブログのURLになるURL。`/config/detail`ページで独自ドメインの設定が可能（※ Proのみ）
+        </doc>
+    </descriptor>
+    <descriptor id="BlogName" title="ブログ名">
+        <doc format="markdown">`meta:title`やヘッダーで表示されるブログの名称。モジュール内であれば`{Title}`の変数で呼び出すことも可能。</doc>
+    </descriptor>
+    <descriptor id="BlogIcon" title="ブログアイコン">
+        <doc format="markdown">
+            ブログを表すアイコン。ブラウザのタブやお気に入り（favicon）、スマートフォンのホーム画面などで使われる。
+            [対応しているファイル形式は、JPEG、PNG](https://help.hatenablog.com/entry/profile?_ga=2.136014642.2065185920.1637628794-1514161678.1632220052#%E3%83%96%E3%83%AD%E3%82%B0%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3favicon%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+        </doc>
+    </descriptor>
+    <descriptor id="BlogLang" title="ブログの言語">
+        <doc format="markdown">ブログの言語を日本語または英語に設定できる。ただし、コメント画面や管理画面は閲覧者の言語によって切り替わる。</doc>
+    </descriptor>
+    <descriptor id="BlogOgImage" title="ブログのアイキャッチ画像">
+        <doc format="markdown">
+            注目エントリーやSNSシェアなどで利用されるアイキャッチ画像。
+            [記事ページでは記事ごとに指定したアイキャッチ画像が優先して表示される。](https://help.hatenablog.com/entry/post_thumbnail?_ga=2.136367283.2065185920.1637628794-1514161678.1632220052)
+        </doc>
+    </descriptor>
+    <descriptor id="BlogComment" title="コメント">
+        <doc format="markdown">コメントを許可した場合、表示されるコメント。</doc>
+    </descriptor>
+
+    <descriptor id="id" def="https://schema.org/identifier" title="identifier" />
+    <descriptor id="articleHeadline" def="https://schema.org/headline" title="article headline">
+        <doc format="markdown">記事のヘッドライン（タイトル）</doc>
+    </descriptor>
+    <descriptor id="articleBody" def="https://schema.org/articleBody" title="article body">
+        <doc format="markdown">記事本文。</doc>
+    </descriptor>
+    <descriptor id="dateCreated" def="https://schema.org/dateCreated" title="create date" />
 
     <!-- Taxonomy -->
-    <descriptor id="Index" title="Home">
-        <descriptor href="#goBlog"/>
+    <descriptor id="Index" title="トップページ">
+        <descriptor href="#BlogDomain" />
+        <descriptor id="goBlogPosting" type="safe" rt="#BlogPosting"/>
+        <descriptor id="goArchive" type="safe" rt="#Archive"/>
+        <descriptor id="goArchiveYearMonthDay" type="safe" rt="#ArchiveYearMonthDay"/>
+        <descriptor id="goArchiveCategory" type="safe" rt="#ArchiveCategory"/>
     </descriptor>
-    <descriptor id="About" title="About Us">
-        <descriptor href="#goBlog"/>
+    <descriptor id="Page" title="固定ページ">
+        <descriptor href="#BlogDomain" />
     </descriptor>
-    <descriptor id="Blog" def="https://schema.org/Blog" title="Blog Post List" tag="collection">
-        <descriptor href="#goAbout"/>
-        <descriptor href="#doPost"/>
-        <descriptor href="#goBlogPosting"/>
-        <descriptor href="#BlogPosting"/>
+    <descriptor id="Archive" def="https://schema.org/Blog" title="記事一覧ページ">
+        <descriptor href="#articleHeadline" />
+        <descriptor href="#articleBody" />
+        <descriptor href="#dateCreated" />
     </descriptor>
-    <descriptor id="BlogPosting" def="https://schema.org/BlogPosting" title="Blog Post" tag="item">
-        <descriptor href="#id"/>
-        <descriptor href="#dateCreated"/>
-        <descriptor href="#articleBody"/>
-        <descriptor href="#goBlog"/>
+    <descriptor id="ArchiveYear" def="https://schema.org/Blog" title="記事一覧ページ（年間）">
+        <descriptor href="#articleHeadline" />
+        <descriptor href="#articleBody" />
+        <descriptor href="#dateCreated" />
     </descriptor>
-
-    <!-- Choreography -->
-    <descriptor id="goStart" type="safe" rt="#Blog" rel="collection" title="Go to Home"/>
-    <descriptor id="goAbout" type="safe" rt="#About" title="Go to About"/>
-    <descriptor id="goBlog" type="safe" rt="#Blog" rel="collection" title="See the blog post list"/>
-    <descriptor id="goBlogPosting" type="safe" rel="item" rt="#BlogPosting" title="See the blog post">
-        <descriptor href="#id"/>
+    <descriptor id="ArchiveYearMonth" def="https://schema.org/Blog" title="記事一覧ページ（月間）">
+        <descriptor href="#articleHeadline" />
+        <descriptor href="#articleBody" />
+        <descriptor href="#dateCreated" />
     </descriptor>
-    <descriptor id="doPost" def="https://activitystrea.ms/specs/json/1.0/#post-verb" type="unsafe" rel="collection" rt="#Blog" title="Post the article">
-        <descriptor href="#articleBody"/>
+    <descriptor id="ArchiveYearMonthDay" def="https://schema.org/Blog" title="記事一覧ページ（日付ごと）">
+        <descriptor href="#articleHeadline" />
+        <descriptor href="#articleBody" />
+        <descriptor href="#dateCreated" />
+    </descriptor>
+    <descriptor id="ArchiveCategory" def="https://schema.org/Blog" title="記事一覧ページ（カテゴリごと）">
+        <descriptor href="#articleHeadline" />
+        <descriptor href="#articleBody" />
+        <descriptor href="#dateCreated" />
+    </descriptor>
+    <descriptor id="ArchiveAuthor" def="https://schema.org/Blog" title="記事一覧ページ（著者ごと）">
+        <descriptor href="#articleHeadline" />
+        <descriptor href="#articleBody" />
+        <descriptor href="#dateCreated" />
+    </descriptor>
+    <descriptor id="BlogPosting" def="https://schema.org/BlogPosting" title="記事ページ">
+        <descriptor href="#articleHeadline" />
+        <descriptor href="#articleBody" />
+        <descriptor href="#dateCreated" />
+        <descriptor id="goArchiveYearMonthDay" type="safe" rt="#ArchiveYearMonthDay"/>
+        <descriptor id="goArchiveCategory" type="safe" rt="#ArchiveCategory"/>
     </descriptor>
 </alps>
